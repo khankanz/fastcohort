@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
 from dataclasses import dataclass
 from datetime import date, datetime
 from typing import List, Mapping, Optional
@@ -9,8 +10,9 @@ from dotenv import load_dotenv
 from fasthtml.common import *
 from fastsql import Database
 from sqlalchemy import text
+from sqlalchemy.engine import URL
 
-load_dotenv()
+load_dotenv(Path.cwd() / ".env")
 
 DEFAULT_QUERY = f"""
 SELECT
@@ -69,6 +71,25 @@ def conn_str() -> Optional[str]:
         value = os.getenv(key)
         if value:
             return value
+
+    driver = os.getenv("DRIV")
+    username = os.getenv("OMOP_USER")
+    password = os.getenv("OMOP_PASS")
+    host = os.getenv("OMOP_HOST")
+    port = os.getenv("PORT")
+    database = os.getenv("OMOP_DB")
+
+    if all([driver, username, password, host, port, database]):
+        return str(
+            URL.create(
+                drivername=driver,
+                username=username,
+                password=password,
+                host=host,
+                port=port,
+                database=database,
+            )
+        )
     return None
 
 
