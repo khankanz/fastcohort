@@ -8,7 +8,16 @@ This repository now includes a FastHTML app that renders OMOP procedure/conditio
 
 ### Setup
 
-1. Create a `.env` file that includes one of the following connection string variables pointing at your Postgres database: `DATABASE_URL`, `POSTGRES_CONNSTR`, or `PG_CONNSTR`.
+1. Create a `.env` file in the project directory. You can either provide a full connection string via `DATABASE_URL`, `POSTGRES_CONNSTR`, or `PG_CONNSTR`, or supply the individual OMOP database pieces:
+   ```
+   DRIV=postgresql+psycopg
+   OMOP_USER=your_user
+   OMOP_PASS=your_password
+   OMOP_HOST=your_host
+   PORT=5432
+   OMOP_DB=your_database
+   ```
+   The app constructs the connection string from these values when the file is loaded.
 2. Install dependencies:
    ```bash
    pip install -r requirements.txt
