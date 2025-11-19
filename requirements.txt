@@ -1,0 +1,4 @@
+fasthtml
+fastsql
+python-dotenv
+SQLAlchemy
